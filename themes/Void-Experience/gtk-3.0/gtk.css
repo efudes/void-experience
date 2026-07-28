@@ -47,6 +47,16 @@
   color: rgba(145, 163, 166, 0.45);
 }
 
+/*
+ * Window Buttons labels sit optically high in XFCE 4.20 because the icon and
+ * text share the plugin's tight 36 px allocation. Move only task-list text;
+ * clocks, workspace controls and indicators keep their existing alignment.
+ */
+#XfcePanelWindow .tasklist button label,
+#XfcePanelWindow #tasklist button label {
+  margin-top: 2px;
+}
+
 #XfcePanelWindow separator {
   background-color: rgba(66, 217, 208, 0.12);
   min-width: 1px;
