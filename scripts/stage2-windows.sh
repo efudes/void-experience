@@ -52,6 +52,8 @@ xfconf-query -c xfwm4 -p /general/margin_left -s 0
 set_shortcut '/commands/custom/<Super>t' kitty
 set_shortcut '/commands/custom/<Super>e' thunar
 set_shortcut '/commands/custom/<Super>l' 'xfce4-screensaver-command --lock'
+set_shortcut '/commands/custom/Print' 'flameshot gui'
+set_shortcut '/commands/custom/<Shift>Print' 'xfce4-screenshooter'
 install -Dm0755 "$project_dir/scripts/void-toggle-desktop" \
     "$HOME/.local/bin/void-toggle-desktop"
 xfconf-query -c xfce4-keyboard-shortcuts \

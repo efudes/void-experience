@@ -2,7 +2,7 @@
 set -eu
 
 project_dir=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
-packages='xfce4 xfce4-goodies arc-theme xfce4-panel-profiles xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin xfce4-xkb-plugin xfce4-genmon-plugin xfce4-screensaver picom rofi wmctrl xdotool kitty thunar tumbler papirus-icon-theme bibata-cursor-theme network-manager-gnome celluloid gnome-sushi ffmpeg libmpv2 x11-utils x11-xserver-utils libnotify-bin'
+packages='xfce4 xfce4-goodies arc-theme xfce4-panel-profiles xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin xfce4-xkb-plugin xfce4-genmon-plugin xfce4-screensaver xfce4-screenshooter flameshot picom rofi wmctrl xdotool kitty thunar tumbler papirus-icon-theme bibata-cursor-theme network-manager-gnome celluloid gnome-sushi ffmpeg libmpv2 x11-utils x11-xserver-utils libnotify-bin'
 
 usage() {
     cat <<'EOF'

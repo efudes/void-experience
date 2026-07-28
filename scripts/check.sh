@@ -28,6 +28,24 @@ for optional_command in rofi wmctrl xdotool; do
     fi
 done
 
+if command -v flameshot >/dev/null 2>&1 &&
+    xfconf-query -c xfce4-keyboard-shortcuts \
+        -p '/commands/custom/Print' 2>/dev/null |
+        grep -qx 'flameshot gui'; then
+    pass "Print launches Flameshot"
+else
+    warn "Print is not configured for Flameshot"
+fi
+
+if command -v xfce4-screenshooter >/dev/null 2>&1 &&
+    xfconf-query -c xfce4-keyboard-shortcuts \
+        -p '/commands/custom/<Shift>Print' 2>/dev/null |
+        grep -qx 'xfce4-screenshooter'; then
+    pass "Shift+Print launches XFCE Screenshooter"
+else
+    warn "Shift+Print is not configured for XFCE Screenshooter"
+fi
+
 picom_count=$(pgrep -x picom 2>/dev/null | wc -l)
 if [ "$picom_count" -le 1 ]; then
     pass "no duplicate Picom process detected"

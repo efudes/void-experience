@@ -10,6 +10,7 @@
 | Compositor/launcher | `picom`, `rofi` |
 | Window layouts | `wmctrl`, `xdotool`, `x11-utils`, `x11-xserver-utils` |
 | Session | `xfce4-screensaver`, `network-manager-gnome`, `kitty` |
+| Screenshots | `flameshot`, `xfce4-screenshooter` |
 | Media | `celluloid`, `gnome-sushi`, `ffmpeg`, `libmpv2` |
 | Helpers | `libnotify-bin` |
 

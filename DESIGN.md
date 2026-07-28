@@ -36,6 +36,8 @@ Large cyan surfaces and strong gradients are avoided.
 - `Super+Alt+Left/Right`: left/right third
 - `Super+Shift+Left/Right`: left/right two-thirds
 - `Super+Z`: visual layout grid
+- `Print`: interactive Flameshot capture
+- `Shift+Print`: XFCE Screenshooter
 
 ## Panels
 

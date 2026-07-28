@@ -12,6 +12,7 @@
 - Added Rofi launcher and multi-monitor active-window layouts with 8 px gaps.
 - Added XFCE-only cursor propagation for native and Flatpak applications.
 - Added styled XFCE lock screen, native Alt+Tab treatment and `Super+D`.
+- Assigned Flameshot to `Print` and XFCE Screenshooter to `Shift+Print`.
 - Added Celluloid and Thunar Space preview through GNOME Sushi.
 - Added idempotent apply, validation, benchmark and recoverable rollback tools.
 - Reworked the workstation prototype into a portable public installer:
