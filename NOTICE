@@ -1,0 +1,14 @@
+Void Experience
+Copyright (C) 2026 efudes and contributors
+
+The Void Experience GTK layer imports resources from Arc-Dark and requires the
+Debian `arc-theme` package at runtime.
+
+Arc Theme:
+Copyright (C) 2016-2017 horst3180
+Copyright (C) 2019-2022 Joonas Henriksson
+https://github.com/jnsh/arc-theme
+Licensed under GPL-3.0-or-later.
+
+Void Experience includes original configuration, scripts, CSS overrides and
+project artwork. The complete project is distributed under GPL-3.0-or-later.

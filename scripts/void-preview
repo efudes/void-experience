@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+[ "$#" -eq 1 ] || {
+    echo "Select exactly one file to preview." >&2
+    exit 2
+}
+
+exec sushi "$1"

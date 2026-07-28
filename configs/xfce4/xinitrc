@@ -1,0 +1,8 @@
+#!/bin/sh
+# Void Experience: cursor environment for applications launched by XFCE,
+# including Flatpak sandboxes. GNOME does not execute this file.
+export XCURSOR_THEME='Bibata-Modern-Ice'
+export XCURSOR_SIZE='24'
+export XCURSOR_PATH="$HOME/.local/share/icons:/usr/share/icons"
+
+exec /etc/xdg/xfce4/xinitrc "$@"

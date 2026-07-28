@@ -1,0 +1,104 @@
+* {
+    background-deep: #050608;
+    background: #0B0E11F7;
+    surface: #11161A;
+    foreground: #E6F2F2;
+    muted: #91A3A6;
+    accent: #42D9D0;
+    accent-soft: #2AAFA9;
+    border-subtle: #42D9D024;
+
+    background-color: transparent;
+    text-color: @foreground;
+}
+
+window {
+    width: 44%;
+    location: center;
+    anchor: center;
+    background-color: @background;
+    border: 1px;
+    border-color: @border-subtle;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+mainbox {
+    spacing: 14px;
+    children: [ inputbar, mode-switcher, listview ];
+}
+
+inputbar {
+    background-color: @surface;
+    border-radius: 8px;
+    padding: 12px 14px;
+    spacing: 10px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    placeholder: "Search applications, windows, or commands";
+    placeholder-color: @muted;
+}
+
+mode-switcher {
+    spacing: 8px;
+}
+
+button {
+    padding: 7px 12px;
+    border-radius: 7px;
+    background-color: transparent;
+    text-color: @muted;
+}
+
+button selected {
+    background-color: @surface;
+    text-color: @accent;
+}
+
+listview {
+    lines: 9;
+    columns: 1;
+    fixed-height: false;
+    scrollbar: false;
+    spacing: 5px;
+}
+
+element {
+    padding: 9px 10px;
+    spacing: 12px;
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+element selected {
+    background-color: @surface;
+    text-color: @foreground;
+}
+
+element-icon {
+    size: 24px;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+message {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: @surface;
+}
+
+textbox {
+    text-color: @muted;
+    background-color: transparent;
+}

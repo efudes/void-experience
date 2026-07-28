@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Void Experience Picom
+Comment=XFCE-only compositor for Void Experience
+Exec=sh -c "exec \\$HOME/.local/bin/void-experience-picom"
+TryExec=picom
+OnlyShowIn=XFCE;
+X-GNOME-Autostart-enabled=false
+Terminal=false
+StartupNotify=false

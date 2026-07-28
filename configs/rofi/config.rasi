@@ -1,0 +1,21 @@
+configuration {
+    modes: "drun,window,run";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    matching: "fuzzy";
+    sort: true;
+    sorting-method: "fzf";
+    case-sensitive: false;
+    cycle: true;
+    sidebar-mode: true;
+    drun-display-format: "{name}";
+    display-drun: "Applications";
+    display-window: "Windows";
+    display-run: "Run";
+    terminal: "kitty";
+    font: "Noto Sans 11";
+    kb-mode-next: "Control+Tab";
+    kb-mode-previous: "Control+ISO_Left_Tab";
+}
+
+@theme "void-experience"

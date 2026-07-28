@@ -1,0 +1,5 @@
+Command=@HOME@/.local/bin/void-network-indicator
+UseLabel=0
+Text=
+UpdatePeriod=15000
+Font=

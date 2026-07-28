@@ -1,0 +1,16 @@
+# Local agent/session metadata
+.agents/
+.codex/
+.gitrepo/
+
+# Generated files and machine snapshots
+__pycache__/
+*.py[cod]
+configs/xfce4/*.tar.bz2
+backups/*
+!backups/README.md
+
+# Local validation output
+*.log
+*.bak
+.void-experience/

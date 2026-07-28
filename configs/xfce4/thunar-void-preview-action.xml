@@ -1,0 +1,15 @@
+<action>
+	<icon>document-preview-symbolic</icon>
+	<name>Быстрый предпросмотр</name>
+	<submenu></submenu>
+	<unique-id>void-experience-preview</unique-id>
+	<command>sh -c &apos;exec &quot;$HOME/.local/bin/void-preview&quot; &quot;$1&quot;&apos; void-preview %f</command>
+	<description>Sushi-предпросмотр выбранного файла по Space</description>
+	<range>1-1</range>
+	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<text-files/>
+	<video-files/>
+	<other-files/>
+</action>
