@@ -7,6 +7,11 @@
 - Kept third-party APT repositories and downloaded installer scripts out.
 - Added an XFCE-only icon layer for unified label-free desktop icons.
 - Corrected the optical baseline of right-side panel indicator images.
+- Declared Noto, XDG, process, NetworkManager and GTK helper dependencies.
+- Made primary-monitor selection explicit and corrected rollback restore order.
+- Added Picom XRender fallback and xfwm compositor recovery for unsupported GPUs.
+- Added temporary-HOME regression tests for one/two monitors, repeated apply and rollback.
+- Replaced non-portable `$HOME` Desktop Entry commands with install-time templates.
 
 ## 0.1.0 — 2026-07-28
 

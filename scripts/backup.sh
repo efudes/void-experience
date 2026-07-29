@@ -37,8 +37,19 @@ for path in \
     "$(xdg-user-dir DESKTOP 2>/dev/null || printf '%s/Desktop' "$HOME")" \
     "$HOME/.themes/Void-Experience" \
     "$HOME/.local/share/icons/Void-Experience-Icons" \
+    "$HOME/.local/bin/void-experience-picom" \
+    "$HOME/.local/bin/void-panel-watch" \
+    "$HOME/.local/bin/void-layout" \
+    "$HOME/.local/bin/void-network-indicator" \
+    "$HOME/.local/bin/void-preview" \
+    "$HOME/.local/bin/void-toggle-desktop" \
     "$HOME/.local/bin/xfwm4" \
-    "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so"; do
+    "$HOME/.local/lib/void-experience/configure-panels" \
+    "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" \
+    "$HOME/.local/share/void-experience/genmon-network.rc" \
+    "$HOME/.local/share/xfce4/xkb/flags/us.svg" \
+    "$HOME/.local/share/xfce4/xkb/flags/ru.svg" \
+    "$HOME/.local/share/icons/hicolor/scalable/apps/void-experience-menu.svg"; do
     copy_path "$path"
 done
 

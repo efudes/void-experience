@@ -33,6 +33,11 @@ recovery_id=$(date +%Y%m%d-%H%M%S)
 recovery_root="$backup_root/rollback-displaced-$recovery_id"
 mkdir -p "$recovery_root"
 
+# Stop only project runtime components so they cannot regenerate XFCE state
+# while its baseline files are being restored.
+pkill -TERM -f "$HOME/.local/bin/void-panel-watch" 2>/dev/null || true
+pkill -TERM -x picom 2>/dev/null || true
+
 displace_path() {
     target_path=$1
     [ -e "$target_path" ] || return 0
@@ -57,14 +62,9 @@ for target in \
     displace_path "$target"
 done
 
-while IFS= read -r relative_path; do
-    [ -n "$relative_path" ] || continue
-    source_path="$backup_root/$relative_path"
-    [ -e "$source_path" ] || continue
-    mkdir -p "$HOME/$(dirname -- "$relative_path")"
-    cp -a "$source_path" "$HOME/$relative_path"
-done <"$present_file"
-
+# Remove project-owned paths before restoration. If any of these existed before
+# installation, backup.sh recorded them and the following restore loop puts
+# their exact baseline back. Never displace them after baseline restoration.
 for project_file in \
     "$HOME/.local/bin/void-experience-picom" \
     "$HOME/.local/bin/void-panel-watch" \
@@ -88,6 +88,23 @@ for project_file in \
     "$HOME/.local/share/icons/hicolor/scalable/apps/void-experience-menu.svg"; do
     [ -e "$project_file" ] && displace_path "$project_file"
 done
+
+while IFS= read -r relative_path; do
+    [ -n "$relative_path" ] || continue
+    source_path="$backup_root/$relative_path"
+    [ -e "$source_path" ] || continue
+    mkdir -p "$HOME/$(dirname -- "$relative_path")"
+    cp -a "$source_path" "$HOME/$relative_path"
+done <"$present_file"
+
+panel_profile="$backup_root/panel-profile/xfce-panel.tar.bz2"
+if [ -f "$panel_profile" ] &&
+    command -v xfce4-panel-profiles >/dev/null 2>&1; then
+    xfce4-panel-profiles load "$panel_profile" 2>/dev/null || {
+        echo "WARNING: panel profile could not be loaded live." >&2
+        echo "The raw baseline remains restored for the next XFCE login." >&2
+    }
+fi
 
 rm -f -- "$HOME/.config/void-experience-backup"
 

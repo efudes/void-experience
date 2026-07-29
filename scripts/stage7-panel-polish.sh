@@ -10,6 +10,18 @@ case "${XDG_CURRENT_DESKTOP-}:${XDG_SESSION_TYPE-}" in
     *) echo "Refusing panel polish outside XFCE/X11." >&2; exit 1 ;;
 esac
 
+active_outputs_primary_first() {
+    xrandr --listactivemonitors | awk '
+        NR > 1 {
+            if ($2 ~ /\*/)
+                primary = primary $NF ORS
+            else
+                secondary = secondary $NF ORS
+        }
+        END { printf "%s%s", primary, secondary }
+    '
+}
+
 mkdir -p "$theme_target/gtk-3.0"
 install -m 0644 "$theme_source/index.theme" "$theme_target/index.theme"
 install -m 0644 "$theme_source/gtk-3.0/gtk.css" \
@@ -29,7 +41,7 @@ install -Dm0644 "$project_dir/assets/icons/void-experience-menu.svg" \
 # Stage 1 reserves twenty plugin IDs per monitor. Render GenMon configuration
 # with the current user's HOME instead of embedding a workstation path.
 monitor_index=0
-outputs=$(xrandr --listactivemonitors | awk 'NR > 1 { print $NF }')
+outputs=$(active_outputs_primary_first)
 for _output in $outputs; do
     network_id=$((806 + monitor_index * 20))
     mkdir -p "$HOME/.config/xfce4/panel"

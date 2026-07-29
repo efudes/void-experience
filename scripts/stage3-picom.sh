@@ -13,7 +13,21 @@ esac
 
 "$project_dir/scripts/apply.sh"
 
-picom --config "$HOME/.config/picom/picom.conf" --diagnostics >/dev/null
+glx_config="$HOME/.config/picom/picom.conf"
+xrender_config="$HOME/.config/picom/picom-xrender.conf"
+if picom --config "$glx_config" --diagnostics >/dev/null 2>&1; then
+    selected_config=$glx_config
+    selected_backend=GLX
+elif picom --config "$xrender_config" --diagnostics >/dev/null 2>&1; then
+    selected_config=$xrender_config
+    selected_backend=XRender
+else
+    # A working compositor is more important than rounded corners. Keep this
+    # fallback scoped to xfwm4 inside the current XFCE session.
+    xfconf-query -c xfwm4 -p /general/use_compositing -s true
+    echo "No usable Picom backend; restored the xfwm4 compositor." >&2
+    exit 1
+fi
 
 if pgrep -x picom >/dev/null 2>&1; then
     pkill -TERM -x picom
@@ -23,4 +37,5 @@ if pgrep -x picom >/dev/null 2>&1; then
     done
 fi
 
-picom --config "$HOME/.config/picom/picom.conf" --daemon
+picom --config "$selected_config" --daemon
+echo "Picom started with $selected_backend backend."

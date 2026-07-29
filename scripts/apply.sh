@@ -30,15 +30,33 @@ install_executable() {
     install -m 0755 "$source_file" "$target_file"
 }
 
+install_home_template() {
+    source_file=$1
+    target_file=$2
+    mkdir -p "$(dirname -- "$target_file")"
+    temporary_file=$(mktemp)
+    sed "s|@HOME@|$HOME|g" "$source_file" >"$temporary_file"
+    if [ -f "$target_file" ] && cmp -s "$temporary_file" "$target_file"; then
+        rm -f -- "$temporary_file"
+        return 0
+    fi
+    install -m 0644 "$temporary_file" "$target_file"
+    rm -f -- "$temporary_file"
+}
+
 install_file "$project_dir/configs/picom/picom.conf" \
     "$HOME/.config/picom/picom.conf"
+install_file "$project_dir/configs/picom/picom-xrender.conf" \
+    "$HOME/.config/picom/picom-xrender.conf"
 install_file "$project_dir/configs/rofi/config.rasi" \
     "$HOME/.config/rofi/config.rasi"
 install_file "$project_dir/configs/rofi/void-experience.rasi" \
     "$HOME/.config/rofi/void-experience.rasi"
-install_file "$project_dir/configs/autostart/void-experience-picom.desktop" \
+install_home_template \
+    "$project_dir/configs/autostart/void-experience-picom.desktop.in" \
     "$HOME/.config/autostart/void-experience-picom.desktop"
-install_file "$project_dir/configs/autostart/void-experience-panel-watch.desktop" \
+install_home_template \
+    "$project_dir/configs/autostart/void-experience-panel-watch.desktop.in" \
     "$HOME/.config/autostart/void-experience-panel-watch.desktop"
 install_file "$project_dir/configs/autostart/xfce4-clipman-plugin-autostart.desktop" \
     "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"

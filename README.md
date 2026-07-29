@@ -76,16 +76,20 @@ freedesktop MIME associations are user-wide.
 - unified label-free XFCE desktop icons with Papirus-Dark fallback.
 
 See [DESIGN.md](DESIGN.md) for the visual system and complete shortcut map.
+See [VM-TEST.md](VM-TEST.md) for the clean-machine acceptance procedure.
 
 ## Validate
 
 ```sh
 ./scripts/check.sh
 ./scripts/benchmark.sh
+./scripts/test-portability.sh
 ```
 
 The check verifies required components, compositor exclusivity, XFCE-only
 autostarts, panels, shortcuts, media preview and theme integration.
+`test-portability.sh` uses a temporary HOME and mocked X11 services to verify
+file-level apply idempotency, primary-monitor ordering and rollback semantics.
 
 ## Roll back
 

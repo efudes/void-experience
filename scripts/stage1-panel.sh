@@ -67,6 +67,18 @@ configure_common_plugin() {
     set_value "/plugins/plugin-$plugin_id" string "$plugin_type"
 }
 
+active_outputs_primary_first() {
+    xrandr --listactivemonitors | awk '
+        NR > 1 {
+            if ($2 ~ /\*/)
+                primary = primary $NF ORS
+            else
+                secondary = secondary $NF ORS
+        }
+        END { printf "%s%s", primary, secondary }
+    '
+}
+
 # Remove only the reserved portable profile range. Existing configuration was
 # backed up by install.sh and can be restored verbatim.
 for panel_id in $(seq 81 96); do
@@ -76,7 +88,7 @@ for plugin_id in $(seq 801 1120); do
     xfconf-query -c "$channel" -p "/plugins/plugin-$plugin_id" -r -R 2>/dev/null || true
 done
 
-outputs=$(xrandr --listactivemonitors | awk 'NR > 1 { print $NF }')
+outputs=$(active_outputs_primary_first)
 [ -n "$outputs" ] || {
     echo "No active XRandR monitor was detected." >&2
     exit 1

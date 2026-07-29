@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-core_packages='xfce4 arc-theme xfce4-panel-profiles xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin xfce4-xkb-plugin xfce4-genmon-plugin xfce4-screensaver xfce4-screenshooter xfce4-clipman flameshot picom rofi wmctrl xdotool kitty thunar tumbler papirus-icon-theme bibata-cursor-theme network-manager-gnome celluloid gnome-sushi ffmpeg libmpv2 x11-utils x11-xserver-utils libnotify-bin gcc libc6-dev'
+core_packages='xfce4 arc-theme xfce4-panel-profiles xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin xfce4-xkb-plugin xfce4-genmon-plugin xfce4-screensaver xfce4-screenshooter xfce4-clipman flameshot picom rofi wmctrl xdotool kitty thunar tumbler papirus-icon-theme bibata-cursor-theme network-manager network-manager-gnome celluloid gnome-sushi ffmpeg libmpv2 x11-utils x11-xserver-utils libnotify-bin fonts-noto-core fontconfig xdg-user-dirs xdg-utils util-linux procps libgtk-3-bin whiptail bash gcc libc6-dev'
 selected=none
 interactive=true
 dry_run=false

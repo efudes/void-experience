@@ -28,6 +28,14 @@ for optional_command in rofi wmctrl xdotool; do
     fi
 done
 
+if command -v fc-match >/dev/null 2>&1 &&
+    fc-match --format '%{family}\n' 'Noto Sans' |
+        grep -qi 'Noto Sans'; then
+    pass "Noto Sans is installed"
+else
+    warn "Noto Sans is missing; Rofi/xfwm will use a fallback font"
+fi
+
 if command -v flameshot >/dev/null 2>&1 &&
     xfconf-query -c xfce4-keyboard-shortcuts \
         -p '/commands/custom/Print' 2>/dev/null |

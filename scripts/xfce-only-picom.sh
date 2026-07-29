@@ -12,4 +12,15 @@ if pgrep -x picom >/dev/null 2>&1; then
     exit 0
 fi
 
-exec picom --config "$HOME/.config/picom/picom.conf"
+glx_config="$HOME/.config/picom/picom.conf"
+xrender_config="$HOME/.config/picom/picom-xrender.conf"
+
+if picom --config "$glx_config" --diagnostics >/dev/null 2>&1; then
+    exec picom --config "$glx_config"
+elif [ -r "$xrender_config" ] &&
+    picom --config "$xrender_config" --diagnostics >/dev/null 2>&1; then
+    exec picom --config "$xrender_config"
+fi
+
+echo "No usable Picom GLX or XRender backend; leaving compositor stopped." >&2
+exit 1
