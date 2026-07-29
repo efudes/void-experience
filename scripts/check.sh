@@ -88,7 +88,7 @@ fi
 desktop_dir=$(xdg-user-dir DESKTOP 2>/dev/null || true)
 [ -n "$desktop_dir" ] || desktop_dir="$HOME/Desktop"
 desktop_launchers_ok=true
-for launcher in Void-home Void-filesystem Void-trash; do
+for launcher in Void-home Void-filesystem Void-trash Void-downloads Void-documents; do
     [ -x "$desktop_dir/$launcher.desktop" ] || desktop_launchers_ok=false
 done
 if "$desktop_launchers_ok"; then

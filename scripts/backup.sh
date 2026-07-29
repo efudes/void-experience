@@ -47,6 +47,7 @@ for path in \
     "$HOME/.local/lib/void-experience/configure-panels" \
     "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" \
     "$HOME/.local/share/void-experience/genmon-network.rc" \
+    "$HOME/.local/share/void-experience/original-desktop-links" \
     "$HOME/.local/share/xfce4/xkb/flags/us.svg" \
     "$HOME/.local/share/xfce4/xkb/flags/ru.svg" \
     "$HOME/.local/share/icons/hicolor/scalable/apps/void-experience-menu.svg"; do

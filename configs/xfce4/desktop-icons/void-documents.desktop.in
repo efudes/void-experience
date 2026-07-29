@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=​
+Comment=Open Documents
+Icon=void-documents
+Exec=thunar "@DOCUMENTS_DIR@"
+Terminal=false
+StartupNotify=true

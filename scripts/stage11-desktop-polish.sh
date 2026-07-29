@@ -44,25 +44,35 @@ downloads_dir=$(xdg-user-dir DOWNLOAD 2>/dev/null || true)
 documents_dir=$(xdg-user-dir DOCUMENTS 2>/dev/null || true)
 [ -n "$downloads_dir" ] || downloads_dir="$HOME/Downloads"
 [ -n "$documents_dir" ] || documents_dir="$HOME/Documents"
+link_store="$HOME/.local/share/void-experience/original-desktop-links"
+mkdir -p "$link_store"
 
 find "$desktop_dir" -mindepth 1 -maxdepth 1 -type l -print |
 while IFS= read -r shortcut; do
     target=$(readlink -f -- "$shortcut" 2>/dev/null || true)
     case "$target" in
         "$downloads_dir")
-            icon_file="$icon_target/48x48/places/void-downloads.svg"
+            shortcut_kind=downloads
             ;;
         "$documents_dir")
-            icon_file="$icon_target/48x48/places/void-documents.svg"
+            shortcut_kind=documents
             ;;
         *)
             continue
             ;;
     esac
-    gio set -t string "$shortcut" metadata::custom-icon \
-        "$(gio info -a standard::target-uri "$icon_file" |
-            sed -n 's/^uri: //p')" 2>/dev/null || true
+    stored_link="$link_store/$shortcut_kind"
+    [ -e "$stored_link" ] || mv -- "$shortcut" "$stored_link"
 done
+
+sed "s|@DOWNLOADS_DIR@|$downloads_dir|g" \
+    "$project_dir/configs/xfce4/desktop-icons/void-downloads.desktop.in" \
+    >"$desktop_dir/Void-downloads.desktop"
+sed "s|@DOCUMENTS_DIR@|$documents_dir|g" \
+    "$project_dir/configs/xfce4/desktop-icons/void-documents.desktop.in" \
+    >"$desktop_dir/Void-documents.desktop"
+chmod 0755 "$desktop_dir/Void-downloads.desktop" \
+    "$desktop_dir/Void-documents.desktop"
 
 xfdesktop --reload >/dev/null 2>&1 || true
 echo "Stage 11 desktop icon polish applied."

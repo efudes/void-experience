@@ -76,6 +76,7 @@ for project_file in \
     "$HOME/.local/lib/void-experience/configure-panels" \
     "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" \
     "$HOME/.local/share/void-experience/genmon-network.rc" \
+    "$HOME/.local/share/void-experience/original-desktop-links" \
     "$HOME/.local/share/icons/Void-Experience-Icons" \
     "$desktop_dir/.void-home.desktop" \
     "$desktop_dir/.void-filesystem.desktop" \
@@ -83,6 +84,8 @@ for project_file in \
     "$desktop_dir/Void-home.desktop" \
     "$desktop_dir/Void-filesystem.desktop" \
     "$desktop_dir/Void-trash.desktop" \
+    "$desktop_dir/Void-downloads.desktop" \
+    "$desktop_dir/Void-documents.desktop" \
     "$HOME/.local/share/xfce4/xkb/flags/us.svg" \
     "$HOME/.local/share/xfce4/xkb/flags/ru.svg" \
     "$HOME/.local/share/icons/hicolor/scalable/apps/void-experience-menu.svg"; do
