@@ -54,6 +54,11 @@ for target in \
     "$HOME/.config/rofi" \
     "$HOME/.config/autostart" \
     "$HOME/.config/kitty" \
+    "$HOME/.config/void-experience/zsh" \
+    "$HOME/.config/starship.toml" \
+    "$HOME/.zshrc" \
+    "$HOME/.zprofile" \
+    "$HOME/.zshenv" \
     "$HOME/.config/Thunar" \
     "$HOME/.config/mimeapps.list" \
     "$HOME/.local/share/applications/mimeapps.list" \
@@ -77,6 +82,7 @@ for project_file in \
     "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" \
     "$HOME/.local/share/void-experience/genmon-network.rc" \
     "$HOME/.local/share/void-experience/original-desktop-links" \
+    "$HOME/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf" \
     "$HOME/.local/share/icons/Void-Experience-Icons" \
     "$desktop_dir/.void-home.desktop" \
     "$desktop_dir/.void-filesystem.desktop" \
@@ -99,6 +105,14 @@ while IFS= read -r relative_path; do
     mkdir -p "$HOME/$(dirname -- "$relative_path")"
     cp -a "$source_path" "$HOME/$relative_path"
 done <"$present_file"
+
+baseline_shell=$(sed -n 's/^LoginShell: //p' "$backup_root/MANIFEST.txt" | head -1)
+current_shell=$(getent passwd "$(id -un)" | cut -d: -f7)
+if [ -n "$baseline_shell" ] && [ "$baseline_shell" != "$current_shell" ] &&
+    grep -qxF "$baseline_shell" /etc/shells; then
+    echo "Restoring the original login shell: $baseline_shell"
+    chsh -s "$baseline_shell"
+fi
 
 panel_profile="$backup_root/panel-profile/xfce-panel.tar.bz2"
 if [ -f "$panel_profile" ] &&

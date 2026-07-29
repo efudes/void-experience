@@ -17,7 +17,8 @@ explicit optional checklist.
 | Media core | `celluloid`, `gnome-sushi`, `ffmpeg`, `libmpv2` |
 | Helpers/build | `libnotify-bin`, `xdg-user-dirs`, `xdg-utils`, `util-linux`, `procps`, `libgtk-3-bin`, `whiptail`, `bash`, `gcc`, `libc6-dev` |
 
-Flatpak/Flathub, Steam, Lutris, Discord and PortProton are off by default.
+Flatpak/Flathub, Steam, Lutris, Discord, PortProton, ani-cli and Void Zsh are
+off by default.
 Selecting a Flatpak app explicitly adds Flathub as a **per-user** remote.
 
 | Optional app | Source | Application ID |
@@ -26,6 +27,13 @@ Selecting a Flatpak app explicitly adds Flathub as a **per-user** remote.
 | Lutris | Flathub | `net.lutris.Lutris` |
 | Discord | Flathub, proprietary | `com.discordapp.Discord` |
 | PortProton | Flathub, x86_64 only | `ru.linux_gaming.PortProton` |
+| ani-cli | Debian 13 | `ani-cli` |
+| Void Zsh | Debian 13 + bundled OFL font | `zsh`, `starship`, `zoxide`, `eza`, `bat`, `ripgrep`, `fd-find`, `fastfetch`, `btop`, `fzf`, `zsh-autosuggestions`, `zsh-syntax-highlighting` |
+
+Void Zsh never imports a raw user `.zshrc`. It installs a project-owned profile
+and adds one marked source block after the timestamped backup exists. Login
+shell replacement is confirmed separately and rollback restores the recorded
+baseline shell.
 
 No third-party APT repository is added and no downloaded shell script is
 executed. Rollback retains packages to avoid removing dependencies used by

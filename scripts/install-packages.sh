@@ -12,7 +12,7 @@ usage() {
 Usage: scripts/install-packages.sh [--select] [--extras=LIST] [--dry-run]
 
 The Debian core is always installed. LIST is a comma-separated selection of:
-flatpak,steam,lutris,discord,portproton,none
+flatpak,steam,lutris,discord,portproton,ani-cli,void-zsh,none
 
 Without --extras the script opens a terminal checklist. Gaming and communication
 apps are installed per-user from Flathub only after explicit selection.
@@ -38,7 +38,7 @@ validate_selection() {
     IFS=,
     for item in $selected; do
         case "$item" in
-            flatpak|steam|lutris|discord|portproton|none|'') ;;
+            flatpak|steam|lutris|discord|portproton|ani-cli|void-zsh|none|'') ;;
             *) echo "Unknown optional component: $item" >&2; exit 2 ;;
         esac
     done
@@ -58,6 +58,8 @@ if "$interactive"; then
                 lutris "Lutris (Flathub)" OFF \
                 discord "Discord (Flathub, proprietary)" OFF \
                 portproton "PortProton (Flathub, x86_64)" OFF \
+                ani-cli "ani-cli (terminal anime browser/player)" OFF \
+                void-zsh "Void Zsh (portable terminal profile)" OFF \
                 3>&1 1>&2 2>&3
         )
         status=$?
@@ -74,6 +76,8 @@ if "$interactive"; then
 fi
 
 validate_selection
+[ -z "${VOID_EXPERIENCE_SELECTION_FILE-}" ] ||
+    printf '%s\n' "$selected" >"$VOID_EXPERIENCE_SELECTION_FILE"
 apt_packages=$core_packages
 flatpak_apps=
 need_flatpak=false
@@ -99,6 +103,10 @@ for mapping in \
 done
 has_selection flatpak && need_flatpak=true
 "$need_flatpak" && apt_packages="$apt_packages flatpak"
+has_selection ani-cli && apt_packages="$apt_packages ani-cli"
+if has_selection void-zsh; then
+    apt_packages="$apt_packages zsh starship zoxide eza bat ripgrep fd-find fastfetch btop fzf zsh-autosuggestions zsh-syntax-highlighting fonts-jetbrains-mono"
+fi
 
 architecture=$(dpkg --print-architecture)
 if [ "$architecture" != amd64 ] &&
@@ -130,6 +138,18 @@ case "$answer" in
     y|Y|yes|YES) ;;
     *) echo "Package installation cancelled." >&2; exit 1 ;;
 esac
+
+if has_selection void-zsh; then
+    echo
+    echo "Void Zsh will add a managed source block to ~/.zshrc."
+    echo "Existing shell files must be backed up by install.sh before the profile is applied."
+    printf "Type INSTALL VOID ZSH to confirm the optional shell profile: "
+    read -r zsh_answer
+    [ "$zsh_answer" = "INSTALL VOID ZSH" ] || {
+        echo "Void Zsh confirmation failed; package installation cancelled." >&2
+        exit 1
+    }
+fi
 
 sudo apt-get update
 # shellcheck disable=SC2086

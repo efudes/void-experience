@@ -14,6 +14,8 @@
 - Replaced non-portable `$HOME` Desktop Entry commands with install-time templates.
 - Added matching per-shortcut Downloads and Documents icons without changing
   the user's whitespace-only desktop labels.
+- Added opt-in `ani-cli` and a doubly confirmed, backup-gated Void Zsh profile
+  reproducing the workstation prompt, aliases, tools and Nerd Font.
 
 ## 0.1.0 — 2026-07-28
 

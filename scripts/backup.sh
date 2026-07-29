@@ -31,12 +31,18 @@ for path in \
     "$HOME/.config/rofi" \
     "$HOME/.config/autostart" \
     "$HOME/.config/kitty" \
+    "$HOME/.config/void-experience/zsh" \
+    "$HOME/.config/starship.toml" \
+    "$HOME/.zshrc" \
+    "$HOME/.zprofile" \
+    "$HOME/.zshenv" \
     "$HOME/.config/Thunar" \
     "$HOME/.config/mimeapps.list" \
     "$HOME/.local/share/applications/mimeapps.list" \
     "$(xdg-user-dir DESKTOP 2>/dev/null || printf '%s/Desktop' "$HOME")" \
     "$HOME/.themes/Void-Experience" \
     "$HOME/.local/share/icons/Void-Experience-Icons" \
+    "$HOME/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf" \
     "$HOME/.local/bin/void-experience-picom" \
     "$HOME/.local/bin/void-panel-watch" \
     "$HOME/.local/bin/void-layout" \
@@ -67,6 +73,7 @@ Host: $(hostname)
 User: $(id -un)
 Desktop: ${XDG_CURRENT_DESKTOP-}
 Session: ${XDG_SESSION_TYPE-}
+LoginShell: $(getent passwd "$(id -un)" | cut -d: -f7)
 EOF
 
 echo "Backup created: $backup_root"

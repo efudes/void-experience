@@ -3,6 +3,8 @@ set -eu
 
 project_dir=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
 package_arguments=
+selection_file=$(mktemp)
+trap 'rm -f -- "$selection_file"' EXIT HUP INT TERM
 
 usage() {
     cat <<'EOF'
@@ -60,7 +62,8 @@ if "$dry_run"; then
 fi
 
 if ! "$skip_packages"; then
-    "$project_dir/scripts/install-packages.sh" \
+    VOID_EXPERIENCE_SELECTION_FILE="$selection_file" \
+        "$project_dir/scripts/install-packages.sh" \
         ${package_arguments:+"$package_arguments"}
 fi
 
@@ -72,6 +75,21 @@ if "$shared_media_defaults"; then
 else
     "$project_dir/scripts/apply.sh" --all
 fi
+
+case ",$(cat "$selection_file" 2>/dev/null || true)," in
+    *,void-zsh,*)
+        "$project_dir/scripts/install-void-zsh.sh" --backup-id="$backup_id"
+        printf "Make Zsh the default login shell too? [y/N] "
+        read -r shell_answer
+        case "$shell_answer" in
+            y|Y|yes|YES)
+                "$project_dir/scripts/install-void-zsh.sh" \
+                    --backup-id="$backup_id" --make-default
+                ;;
+            *) echo "Login shell was not changed." ;;
+        esac
+        ;;
+esac
 
 printf '%s\n' "$backup_id" >"$HOME/.config/void-experience-backup"
 

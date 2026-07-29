@@ -1,0 +1,23 @@
+add_newline = false
+
+format = """
+$directory$git_branch$git_status
+$character
+"""
+
+[directory]
+style = "bold cyan"
+truncate_to_repo = true
+truncation_length = 3
+read_only = " 󰌾"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold red"
+
+[character]
+success_symbol = "[❯](bold cyan)"
+error_symbol = "[❯](bold red)"

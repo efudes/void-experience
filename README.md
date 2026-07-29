@@ -26,6 +26,12 @@ management and MP3/video support remain mandatory. For automation:
 ./install.sh --extras=steam,lutris
 ```
 
+The optional `void-zsh` choice reproduces the project shell: Starship prompt,
+Zoxide, FZF-oriented tools, modern aliases, autosuggestions, syntax
+highlighting and the bundled JetBrainsMono Nerd Font. It requires a second,
+literal confirmation before any shell file is changed. Changing the login
+shell is a third, separate opt-in.
+
 That is the only installation script. It:
 
 1. shows a package checklist and the exact commands before privilege elevation;
@@ -74,6 +80,7 @@ freedesktop MIME associations are user-wide.
 - monitor-hotplug guard that regenerates panels from the current XRandR state.
 - user-local guard for Debian 13's pre-upstream-fix xfwm4/Picom NULL lookup bug.
 - unified label-free XFCE desktop icons with Papirus-Dark fallback.
+- optional, rollback-safe Void Zsh profile and `ani-cli` package choice.
 
 See [DESIGN.md](DESIGN.md) for the visual system and complete shortcut map.
 See [VM-TEST.md](VM-TEST.md) for the clean-machine acceptance procedure.

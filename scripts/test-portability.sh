@@ -79,7 +79,7 @@ chmod 0755 "$mock_dir/void-mock"
 for command_name in \
     xrandr xdg-user-dir xfconf-query pgrep pkill picom rofi wmctrl xdotool \
     xfce4-panel xfdesktop xfce4-screensaver-command celluloid sushi thunar \
-    gtk-update-icon-cache xfce4-panel-profiles; do
+    gtk-update-icon-cache xfce4-panel-profiles fc-cache; do
     ln -s void-mock "$mock_dir/$command_name"
 done
 
@@ -188,9 +188,12 @@ grep -Fq '/general/use_compositing -s true' "$no_compositor_log" || {
 rollback_home="$test_root/rollback-home"
 mkdir -p \
     "$rollback_home/.config/xfce4" \
+    "$rollback_home/.config/kitty" \
     "$rollback_home/.local/bin" \
     "$rollback_home/Desktop"
 printf 'baseline-xfce\n' >"$rollback_home/.config/xfce4/value"
+printf '# baseline-zsh\n' >"$rollback_home/.zshrc"
+printf 'baseline-kitty\n' >"$rollback_home/.config/kitty/kitty.conf"
 printf 'baseline-layout\n' >"$rollback_home/.local/bin/void-layout"
 printf 'baseline-desktop\n' >"$rollback_home/Desktop/user.txt"
 
@@ -200,6 +203,25 @@ XDG_SESSION_TYPE=x11 \
 VOID_TEST_LOG="$test_log" \
 PATH="$mock_dir:$PATH" \
     "$project_dir/scripts/backup.sh" 20000101-000000 >/dev/null
+
+"$project_dir/scripts/install-void-zsh.sh" \
+    --dry-run >/dev/null
+HOME="$rollback_home" \
+PATH="$mock_dir:$PATH" \
+    "$project_dir/scripts/install-void-zsh.sh" \
+    --backup-id=20000101-000000 >/dev/null
+HOME="$rollback_home" \
+PATH="$mock_dir:$PATH" \
+    "$project_dir/scripts/install-void-zsh.sh" \
+    --backup-id=20000101-000000 >/dev/null
+[ "$(grep -Fxc '# >>> Void Experience Zsh >>>' "$rollback_home/.zshrc")" -eq 1 ]
+grep -Fqx 'include void-zsh-font.conf' \
+    "$rollback_home/.config/kitty/kitty.conf"
+HOME="$rollback_home" \
+ZDOTDIR="$rollback_home" \
+XDG_CONFIG_HOME=/deliberately/wrong \
+XDG_CACHE_HOME=/deliberately/wrong \
+    zsh -ic 'alias ll >/dev/null; [[ "$STARSHIP_CONFIG" == "$HOME/.config/void-experience/zsh/starship.toml" ]]'
 
 printf 'mutated-xfce\n' >"$rollback_home/.config/xfce4/value"
 printf 'mutated-layout\n' >"$rollback_home/.local/bin/void-layout"
@@ -214,11 +236,21 @@ PATH="$mock_dir:$PATH" \
     "$project_dir/scripts/rollback.sh" 20000101-000000 >/dev/null
 
 grep -qx 'baseline-xfce' "$rollback_home/.config/xfce4/value"
+grep -qx '# baseline-zsh' "$rollback_home/.zshrc"
+grep -qx 'baseline-kitty' "$rollback_home/.config/kitty/kitty.conf"
 grep -qx 'baseline-layout' "$rollback_home/.local/bin/void-layout"
 grep -qx 'baseline-desktop' "$rollback_home/Desktop/user.txt"
 [ ! -e "$rollback_home/.local/bin/void-preview" ]
 [ ! -e "$rollback_home/Desktop/post-install.txt" ]
 grep -Fq 'panel-load ' "$test_log"
+
+selection_file="$test_root/selection"
+VOID_EXPERIENCE_SELECTION_FILE="$selection_file" \
+    "$project_dir/scripts/install-packages.sh" \
+    --extras=ani-cli,void-zsh --dry-run >"$test_root/packages.out"
+grep -qx 'ani-cli,void-zsh' "$selection_file"
+grep -q ' ani-cli ' "$test_root/packages.out"
+grep -q ' zsh starship zoxide ' "$test_root/packages.out"
 
 echo "PASS: apply file tree is idempotent"
 echo "PASS: primary monitor is configured first"
@@ -226,3 +258,5 @@ echo "PASS: one-monitor and two-monitor profiles differ correctly"
 echo "PASS: Picom falls back from GLX to XRender"
 echo "PASS: xfwm compositor is restored if both Picom backends fail"
 echo "PASS: rollback restores baseline and displaces post-install files"
+echo "PASS: Void Zsh is idempotent, backup-gated and rollback-safe"
+echo "PASS: ani-cli and Void Zsh resolve through the optional selector"

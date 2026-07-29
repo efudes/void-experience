@@ -78,6 +78,14 @@ else
     warn "XFCE-only Clipman autostart is not installed"
 fi
 
+if [ -f "$HOME/.config/void-experience/zsh/void-experience.zsh" ]; then
+    if grep -Fqx '# >>> Void Experience Zsh >>>' "$HOME/.zshrc" 2>/dev/null; then
+        pass "optional Void Zsh profile is installed"
+    else
+        warn "Void Zsh profile exists but ~/.zshrc does not source it"
+    fi
+fi
+
 if xfconf-query -c xsettings -p /Net/IconThemeName 2>/dev/null |
     grep -qx 'Void-Experience-Icons'; then
     pass "XFCE uses the Void Experience icon layer"
