@@ -16,6 +16,8 @@
   the user's whitespace-only desktop labels.
 - Added opt-in `ani-cli` and a doubly confirmed, backup-gated Void Zsh profile
   reproducing the workstation prompt, aliases, tools and Nerd Font.
+- Fixed layouts for freshly opened maximized Kitty windows by sending
+  fullscreen and maximize removals as valid separate EWMH requests.
 
 ## 0.1.0 — 2026-07-28
 

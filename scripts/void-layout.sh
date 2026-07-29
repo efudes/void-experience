@@ -79,6 +79,15 @@ read -r work_x work_y work_width work_height < <(
 max() { (( $1 > $2 )) && printf '%s' "$1" || printf '%s' "$2"; }
 min() { (( $1 < $2 )) && printf '%s' "$1" || printf '%s' "$2"; }
 
+restore_window_state() {
+    # wmctrl accepts at most two properties after the action. Supplying
+    # fullscreen plus both maximize atoms silently leaves MAXIMIZED_HORZ set
+    # on xfwm4, which makes a freshly opened maximized Kitty ignore geometry.
+    wmctrl -ir "$window_hex" -b remove,fullscreen
+    wmctrl -ir "$window_hex" \
+        -b remove,maximized_vert,maximized_horz
+}
+
 area_x=$(max "$monitor_x" "$work_x")
 area_y=$(max "$monitor_y" "$work_y")
 area_right=$(min "$((monitor_x + monitor_width))" "$((work_x + work_width))")
@@ -216,8 +225,7 @@ case "$layout" in
                 "$monitor_name" "$area_x" "$area_y" "$area_width" "$area_height"
             exit 0
         fi
-        wmctrl -ir "$window_hex" \
-            -b remove,fullscreen,maximized_vert,maximized_horz
+        restore_window_state
         # xfwm4 processes EWMH state changes asynchronously. Wait until a
         # fullscreen client is restored before asking it to maximize again.
         for _attempt in {1..25}; do
@@ -246,8 +254,7 @@ fi
 # Geometry requests sent while xfwm4 still considers a window fullscreen or
 # maximized are ignored. Restore it first and wait up to 500 ms for EWMH state
 # and decorations to settle.
-wmctrl -ir "$window_hex" \
-    -b remove,fullscreen,maximized_vert,maximized_horz
+restore_window_state
 for _attempt in {1..25}; do
     state=$(xprop -id "$window_id" _NET_WM_STATE 2>/dev/null || true)
     [[ $state != *'_NET_WM_STATE_FULLSCREEN'* &&

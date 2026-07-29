@@ -252,6 +252,15 @@ grep -qx 'ani-cli,void-zsh' "$selection_file"
 grep -q ' ani-cli ' "$test_root/packages.out"
 grep -q ' zsh starship zoxide ' "$test_root/packages.out"
 
+if grep -q -- '-b remove,fullscreen,maximized_' \
+    "$project_dir/scripts/void-layout.sh"; then
+    echo "FAIL: layout helper passes more than two EWMH properties to wmctrl" >&2
+    exit 1
+fi
+grep -q -- '-b remove,fullscreen' "$project_dir/scripts/void-layout.sh"
+grep -q -- '-b remove,maximized_vert,maximized_horz' \
+    "$project_dir/scripts/void-layout.sh"
+
 echo "PASS: apply file tree is idempotent"
 echo "PASS: primary monitor is configured first"
 echo "PASS: one-monitor and two-monitor profiles differ correctly"
@@ -260,3 +269,4 @@ echo "PASS: xfwm compositor is restored if both Picom backends fail"
 echo "PASS: rollback restores baseline and displaces post-install files"
 echo "PASS: Void Zsh is idempotent, backup-gated and rollback-safe"
 echo "PASS: ani-cli and Void Zsh resolve through the optional selector"
+echo "PASS: fullscreen and maximize states use separate valid wmctrl requests"
