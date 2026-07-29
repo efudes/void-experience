@@ -12,11 +12,24 @@ exec 9>"$lock_file"
 flock -n 9 || exit 0
 
 fingerprint() {
-    xrandr --listactivemonitors 2>/dev/null | sed -n '2,$p'
+    found=false
+    for status_file in /sys/class/drm/card*-*/status; do
+        [ -r "$status_file" ] || continue
+        found=true
+        connector_dir=${status_file%/status}
+        printf '%s:' "${connector_dir##*/}"
+        cat "$status_file"
+    done
+    if ! "$found"; then
+        # Non-DRM X servers are uncommon on the supported Debian/Xorg target.
+        # Keep a functional fallback, but avoid the aggressive polling cadence
+        # that can produce RandR/EDID storms with modesetting drivers.
+        xrandr --listactivemonitors 2>/dev/null | sed -n '2,$p'
+    fi
 }
 
 previous=$(fingerprint)
-while sleep 2; do
+while sleep 5; do
     current=$(fingerprint)
     [ "$current" = "$previous" ] && continue
     sleep 2

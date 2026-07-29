@@ -34,7 +34,9 @@ for path in \
     "$HOME/.config/Thunar" \
     "$HOME/.config/mimeapps.list" \
     "$HOME/.local/share/applications/mimeapps.list" \
-    "$HOME/.themes/Void-Experience"; do
+    "$HOME/.themes/Void-Experience" \
+    "$HOME/.local/bin/xfwm4" \
+    "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so"; do
     copy_path "$path"
 done
 

@@ -13,6 +13,8 @@ esac
 
 theme_source="$project_dir/themes/Void-Experience/xfwm4"
 theme_target="$HOME/.themes/Void-Experience/xfwm4"
+guard_source="$project_dir/src/xfwm-null-hash-guard.c"
+guard_target="$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so"
 
 [ -f "$theme_source/themerc" ] || {
     echo "Theme source is incomplete." >&2
@@ -21,6 +23,22 @@ theme_target="$HOME/.themes/Void-Experience/xfwm4"
 
 mkdir -p "$theme_target"
 cp -a "$theme_source/." "$theme_target/"
+
+# Debian 13 xfwm4 4.20.0 predates upstream commit 69a16352. With Picom active,
+# compositorIsActive() returns true while cwindow_hash is NULL, producing a
+# warning for nearly every X11 event. Compile a user-local ABI guard that
+# implements the exact upstream NULL-return semantics; never replace /usr/bin.
+if command -v cc >/dev/null 2>&1; then
+    mkdir -p "$(dirname -- "$guard_target")"
+    cc -shared -fPIC -O2 -Wall -Wextra \
+        -o "$guard_target.tmp" "$guard_source" -ldl
+    mv "$guard_target.tmp" "$guard_target"
+    chmod 0755 "$guard_target"
+    install -Dm0755 "$project_dir/scripts/void-xfwm4-wrapper" \
+        "$HOME/.local/bin/xfwm4"
+else
+    echo "WARNING: cc is missing; xfwm4 external-compositor guard was not built." >&2
+fi
 
 set_wm_string() {
     xfconf-query -c xfwm4 -p "$1" -n -t string -s "$2"
@@ -54,6 +72,7 @@ set_shortcut '/commands/custom/<Super>e' thunar
 set_shortcut '/commands/custom/<Super>l' 'xfce4-screensaver-command --lock'
 set_shortcut '/commands/custom/Print' 'flameshot gui'
 set_shortcut '/commands/custom/<Shift>Print' 'xfce4-screenshooter'
+set_shortcut '/commands/custom/<Super>v' 'xfce4-clipman-history'
 install -Dm0755 "$project_dir/scripts/void-toggle-desktop" \
     "$HOME/.local/bin/void-toggle-desktop"
 xfconf-query -c xfce4-keyboard-shortcuts \

@@ -19,9 +19,16 @@ cd void-experience
 ./install.sh
 ```
 
+The installer first shows an optional-software checklist. Core XFCE, window
+management and MP3/video support remain mandatory. For automation:
+
+```sh
+./install.sh --extras=steam,lutris
+```
+
 That is the only installation script. It:
 
-1. shows the exact Debian package command and asks before privilege elevation;
+1. shows a package checklist and the exact commands before privilege elevation;
 2. creates a complete timestamped user-config backup;
 3. detects active monitors instead of assuming connector names or coordinates;
 4. applies every XFCE-only component idempotently;
@@ -61,9 +68,11 @@ freedesktop MIME associations are user-wide.
 - Kitty on `Super+T`, Thunar on `Super+E`, lock on `Super+L`;
 - show/restore desktop on `Super+D`;
 - Flameshot on `Print` and XFCE Screenshooter on `Shift+Print`;
+- lightweight Clipman clipboard history on `Super+V`;
 - Celluloid and Thunar Space preview through Sushi;
 - XFCE screensaver styling and compact native Alt+Tab;
 - monitor-hotplug guard that regenerates panels from the current XRandR state.
+- user-local guard for Debian 13's pre-upstream-fix xfwm4/Picom NULL lookup bug.
 
 See [DESIGN.md](DESIGN.md) for the visual system and complete shortcut map.
 

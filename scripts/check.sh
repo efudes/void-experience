@@ -46,6 +46,30 @@ else
     warn "Shift+Print is not configured for XFCE Screenshooter"
 fi
 
+if command -v xfce4-clipman-history >/dev/null 2>&1 &&
+    xfconf-query -c xfce4-keyboard-shortcuts \
+        -p '/commands/custom/<Super>v' 2>/dev/null |
+        grep -qx 'xfce4-clipman-history'; then
+    pass "Super+V opens clipboard history"
+else
+    warn "Super+V clipboard history is not configured"
+fi
+
+if [ -x "$HOME/.local/bin/xfwm4" ] &&
+    [ -r "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" ]; then
+    pass "xfwm4 external-compositor NULL guard is installed"
+else
+    warn "xfwm4 external-compositor NULL guard is not installed"
+fi
+
+if [ -f "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop" ] &&
+    grep -qx 'OnlyShowIn=XFCE;' \
+        "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"; then
+    pass "Clipman autostart is XFCE-only"
+else
+    warn "XFCE-only Clipman autostart is not installed"
+fi
+
 picom_count=$(pgrep -x picom 2>/dev/null | wc -l)
 if [ "$picom_count" -le 1 ]; then
     pass "no duplicate Picom process detected"

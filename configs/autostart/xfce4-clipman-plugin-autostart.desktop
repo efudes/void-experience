@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Clipman
+Comment=XFCE clipboard history
+Exec=xfce4-clipman
+TryExec=xfce4-clipman
+OnlyShowIn=XFCE;
+Hidden=false
+Terminal=false
+StartupNotify=false

@@ -68,7 +68,9 @@ for project_file in \
     "$HOME/.local/bin/void-network-indicator" \
     "$HOME/.local/bin/void-preview" \
     "$HOME/.local/bin/void-toggle-desktop" \
+    "$HOME/.local/bin/xfwm4" \
     "$HOME/.local/lib/void-experience/configure-panels" \
+    "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" \
     "$HOME/.local/share/void-experience/genmon-network.rc" \
     "$HOME/.local/share/xfce4/xkb/flags/us.svg" \
     "$HOME/.local/share/xfce4/xkb/flags/ru.svg" \

@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+guard="$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so"
+
+case "${XDG_CURRENT_DESKTOP-}:${XDG_SESSION_TYPE-}" in
+    *XFCE*:x11)
+        if [ -r "$guard" ]; then
+            export LD_PRELOAD="$guard${LD_PRELOAD:+:$LD_PRELOAD}"
+        fi
+        ;;
+esac
+
+exec /usr/bin/xfwm4 "$@"

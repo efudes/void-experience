@@ -38,6 +38,7 @@ Large cyan surfaces and strong gradients are avoided.
 - `Super+Z`: visual layout grid
 - `Print`: interactive Flameshot capture
 - `Shift+Print`: XFCE Screenshooter
+- `Super+V`: clipboard history
 
 ## Panels
 

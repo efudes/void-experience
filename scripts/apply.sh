@@ -40,6 +40,8 @@ install_file "$project_dir/configs/autostart/void-experience-picom.desktop" \
     "$HOME/.config/autostart/void-experience-picom.desktop"
 install_file "$project_dir/configs/autostart/void-experience-panel-watch.desktop" \
     "$HOME/.config/autostart/void-experience-panel-watch.desktop"
+install_file "$project_dir/configs/autostart/xfce4-clipman-plugin-autostart.desktop" \
+    "$HOME/.config/autostart/xfce4-clipman-plugin-autostart.desktop"
 install_executable "$project_dir/scripts/xfce-only-picom.sh" \
     "$HOME/.local/bin/void-experience-picom"
 install_executable "$project_dir/scripts/void-panel-watch.sh" \
