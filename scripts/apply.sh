@@ -98,6 +98,9 @@ case "${1-}" in
     --stage10-alt-tab)
         "$project_dir/scripts/stage10-alt-tab.sh"
         ;;
+    --stage11-desktop-polish)
+        "$project_dir/scripts/stage11-desktop-polish.sh"
+        ;;
     --all)
         "$project_dir/scripts/stage7-panel-polish.sh"
         "$project_dir/scripts/stage1-panel.sh"
@@ -109,6 +112,7 @@ case "${1-}" in
         "$project_dir/scripts/stage8-lockscreen.sh"
         "$project_dir/scripts/stage9-media.sh"
         "$project_dir/scripts/stage10-alt-tab.sh"
+        "$project_dir/scripts/stage11-desktop-polish.sh"
         ;;
     "")
         ;;

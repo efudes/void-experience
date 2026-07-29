@@ -5,6 +5,8 @@
 - Split installation into a mandatory Debian core and an interactive checklist.
 - Added opt-in Flathub choices for Steam, Lutris, Discord and PortProton.
 - Kept third-party APT repositories and downloaded installer scripts out.
+- Added an XFCE-only icon layer for unified label-free desktop icons.
+- Corrected the optical baseline of right-side panel indicator images.
 
 ## 0.1.0 — 2026-07-28
 

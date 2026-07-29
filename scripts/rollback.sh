@@ -1,6 +1,9 @@
 #!/bin/sh
 set -eu
 
+desktop_dir=$(xdg-user-dir DESKTOP 2>/dev/null || true)
+[ -n "$desktop_dir" ] || desktop_dir="$HOME/Desktop"
+
 if [ -n "${1-}" ]; then
     backup_id=$1
 elif [ -f "$HOME/.config/void-experience-backup" ]; then
@@ -49,7 +52,8 @@ for target in \
     "$HOME/.config/Thunar" \
     "$HOME/.config/mimeapps.list" \
     "$HOME/.local/share/applications/mimeapps.list" \
-    "$HOME/.themes/Void-Experience"; do
+    "$HOME/.themes/Void-Experience" \
+    "$desktop_dir"; do
     displace_path "$target"
 done
 
@@ -72,6 +76,13 @@ for project_file in \
     "$HOME/.local/lib/void-experience/configure-panels" \
     "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" \
     "$HOME/.local/share/void-experience/genmon-network.rc" \
+    "$HOME/.local/share/icons/Void-Experience-Icons" \
+    "$desktop_dir/.void-home.desktop" \
+    "$desktop_dir/.void-filesystem.desktop" \
+    "$desktop_dir/.void-trash.desktop" \
+    "$desktop_dir/Void-home.desktop" \
+    "$desktop_dir/Void-filesystem.desktop" \
+    "$desktop_dir/Void-trash.desktop" \
     "$HOME/.local/share/xfce4/xkb/flags/us.svg" \
     "$HOME/.local/share/xfce4/xkb/flags/ru.svg" \
     "$HOME/.local/share/icons/hicolor/scalable/apps/void-experience-menu.svg"; do

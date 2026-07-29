@@ -1,0 +1,26 @@
+[Icon Theme]
+Name=Void Experience Icons
+Comment=XFCE desktop icons for Void Experience
+Inherits=Papirus-Dark,hicolor
+Directories=48x48/places,48x48/devices,48x48/status
+
+[48x48/places]
+Size=48
+Context=Places
+Type=Scalable
+MinSize=16
+MaxSize=128
+
+[48x48/devices]
+Size=48
+Context=Devices
+Type=Scalable
+MinSize=16
+MaxSize=128
+
+[48x48/status]
+Size=48
+Context=Status
+Type=Scalable
+MinSize=16
+MaxSize=128

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=​
+Comment=Open Home
+Icon=void-home
+Exec=thunar
+Terminal=false
+StartupNotify=true

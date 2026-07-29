@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=​
+Comment=Open Trash
+Icon=void-trash
+Exec=thunar trash:///
+Terminal=false
+StartupNotify=true

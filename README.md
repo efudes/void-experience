@@ -73,6 +73,7 @@ freedesktop MIME associations are user-wide.
 - XFCE screensaver styling and compact native Alt+Tab;
 - monitor-hotplug guard that regenerates panels from the current XRandR state.
 - user-local guard for Debian 13's pre-upstream-fix xfwm4/Picom NULL lookup bug.
+- unified label-free XFCE desktop icons with Papirus-Dark fallback.
 
 See [DESIGN.md](DESIGN.md) for the visual system and complete shortcut map.
 

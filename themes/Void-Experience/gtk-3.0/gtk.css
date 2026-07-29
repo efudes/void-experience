@@ -83,6 +83,15 @@
   margin-top: 1px;
 }
 
+/* Symbolic panel images sit one physical pixel below text in GTK 3's 36 px
+ * allocation. Correct only right-side indicator images, not task buttons. */
+#pulseaudio-button image,
+#XfcePanelWindow .pulseaudio-plugin image,
+#XfcePanelWindow .genmon_plugin image,
+#XfcePanelWindow .systray image {
+  margin-top: -1px;
+}
+
 /* xfce4-xkb-plugin may expose either its instance or generic widget name,
  * depending on whether it is embedded or external in the panel build. */
 #xkb-42 button,

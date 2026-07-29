@@ -70,6 +70,25 @@ else
     warn "XFCE-only Clipman autostart is not installed"
 fi
 
+if xfconf-query -c xsettings -p /Net/IconThemeName 2>/dev/null |
+    grep -qx 'Void-Experience-Icons'; then
+    pass "XFCE uses the Void Experience icon layer"
+else
+    warn "XFCE desktop icon layer is not active"
+fi
+
+desktop_dir=$(xdg-user-dir DESKTOP 2>/dev/null || true)
+[ -n "$desktop_dir" ] || desktop_dir="$HOME/Desktop"
+desktop_launchers_ok=true
+for launcher in Void-home Void-filesystem Void-trash; do
+    [ -x "$desktop_dir/$launcher.desktop" ] || desktop_launchers_ok=false
+done
+if "$desktop_launchers_ok"; then
+    pass "label-free XFCE desktop launchers are installed"
+else
+    warn "label-free XFCE desktop launchers are incomplete"
+fi
+
 picom_count=$(pgrep -x picom 2>/dev/null | wc -l)
 if [ "$picom_count" -le 1 ]; then
     pass "no duplicate Picom process detected"
