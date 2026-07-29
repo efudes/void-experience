@@ -12,7 +12,8 @@ usage() {
 Usage: scripts/install-packages.sh [--select] [--extras=LIST] [--dry-run]
 
 The Debian core is always installed. LIST is a comma-separated selection of:
-flatpak,steam,lutris,discord,portproton,ani-cli,void-zsh,none
+flatpak,steam,lutris,discord,portproton,ani-cli,void-zsh,cava,ncdu,duf,
+du-dust,lazygit,broot,glow,none
 
 Without --extras the script opens a terminal checklist. Gaming and communication
 apps are installed per-user from Flathub only after explicit selection.
@@ -38,7 +39,8 @@ validate_selection() {
     IFS=,
     for item in $selected; do
         case "$item" in
-            flatpak|steam|lutris|discord|portproton|ani-cli|void-zsh|none|'') ;;
+            flatpak|steam|lutris|discord|portproton|ani-cli|void-zsh|\
+            cava|ncdu|duf|du-dust|lazygit|broot|glow|none|'') ;;
             *) echo "Unknown optional component: $item" >&2; exit 2 ;;
         esac
     done
@@ -52,7 +54,7 @@ if "$interactive"; then
             whiptail --title "Void Experience — optional software" \
                 --checklist \
                 "Space toggles a component. Core XFCE and MP3/video support are mandatory." \
-                22 78 12 \
+                28 84 18 \
                 flatpak "Flatpak + Flathub only" OFF \
                 steam "Steam (community Flatpak, unverified)" OFF \
                 lutris "Lutris (Flathub)" OFF \
@@ -60,6 +62,13 @@ if "$interactive"; then
                 portproton "PortProton (Flathub, x86_64)" OFF \
                 ani-cli "ani-cli (terminal anime browser/player)" OFF \
                 void-zsh "Void Zsh (portable terminal profile)" OFF \
+                cava "CAVA (terminal audio visualizer)" OFF \
+                ncdu "ncdu (interactive disk usage)" OFF \
+                duf "duf (filesystem overview)" OFF \
+                du-dust "dust (visual directory sizes)" OFF \
+                lazygit "lazygit (terminal Git UI)" OFF \
+                broot "broot (interactive file tree)" OFF \
+                glow "Glow (terminal Markdown reader)" OFF \
                 3>&1 1>&2 2>&3
         )
         status=$?
@@ -104,6 +113,10 @@ done
 has_selection flatpak && need_flatpak=true
 "$need_flatpak" && apt_packages="$apt_packages flatpak"
 has_selection ani-cli && apt_packages="$apt_packages ani-cli"
+for optional_apt in cava ncdu duf du-dust lazygit broot glow; do
+    has_selection "$optional_apt" &&
+        apt_packages="$apt_packages $optional_apt"
+done
 if has_selection void-zsh; then
     apt_packages="$apt_packages zsh starship zoxide eza bat ripgrep fd-find fastfetch btop fzf zsh-autosuggestions zsh-syntax-highlighting fonts-jetbrains-mono"
 fi

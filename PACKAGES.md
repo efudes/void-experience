@@ -17,8 +17,8 @@ explicit optional checklist.
 | Media core | `celluloid`, `gnome-sushi`, `ffmpeg`, `libmpv2` |
 | Helpers/build | `libnotify-bin`, `xdg-user-dirs`, `xdg-utils`, `util-linux`, `procps`, `libgtk-3-bin`, `whiptail`, `bash`, `gcc`, `libc6-dev` |
 
-Flatpak/Flathub, Steam, Lutris, Discord, PortProton, ani-cli and Void Zsh are
-off by default.
+Flatpak/Flathub, Steam, Lutris, Discord, PortProton, ani-cli, Void Zsh and the
+terminal utilities below are off by default.
 Selecting a Flatpak app explicitly adds Flathub as a **per-user** remote.
 
 | Optional app | Source | Application ID |
@@ -29,6 +29,11 @@ Selecting a Flatpak app explicitly adds Flathub as a **per-user** remote.
 | PortProton | Flathub, x86_64 only | `ru.linux_gaming.PortProton` |
 | ani-cli | Debian 13 | `ani-cli` |
 | Void Zsh | Debian 13 + bundled OFL font | `zsh`, `starship`, `zoxide`, `eza`, `bat`, `ripgrep`, `fd-find`, `fastfetch`, `btop`, `fzf`, `zsh-autosuggestions`, `zsh-syntax-highlighting` |
+| CAVA | Debian 13 | `cava` |
+| Disk usage | Debian 13 | `ncdu`, `duf`, `du-dust` |
+| Git TUI | Debian 13 | `lazygit` |
+| File tree | Debian 13 | `broot` |
+| Markdown reader | Debian 13 | `glow` |
 
 Void Zsh never imports a raw user `.zshrc`. It installs a project-owned profile
 and adds one marked source block after the timestamped backup exists. Login

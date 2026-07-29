@@ -247,10 +247,14 @@ grep -Fq 'panel-load ' "$test_log"
 selection_file="$test_root/selection"
 VOID_EXPERIENCE_SELECTION_FILE="$selection_file" \
     "$project_dir/scripts/install-packages.sh" \
-    --extras=ani-cli,void-zsh --dry-run >"$test_root/packages.out"
-grep -qx 'ani-cli,void-zsh' "$selection_file"
+    --extras=ani-cli,void-zsh,cava,ncdu,duf,du-dust,lazygit,broot,glow \
+    --dry-run >"$test_root/packages.out"
+grep -qx 'ani-cli,void-zsh,cava,ncdu,duf,du-dust,lazygit,broot,glow' \
+    "$selection_file"
 grep -q ' ani-cli ' "$test_root/packages.out"
 grep -q ' zsh starship zoxide ' "$test_root/packages.out"
+grep -q ' cava ncdu duf du-dust lazygit broot glow' \
+    "$test_root/packages.out"
 
 if grep -q -- '-b remove,fullscreen,maximized_' \
     "$project_dir/scripts/void-layout.sh"; then
@@ -268,5 +272,5 @@ echo "PASS: Picom falls back from GLX to XRender"
 echo "PASS: xfwm compositor is restored if both Picom backends fail"
 echo "PASS: rollback restores baseline and displaces post-install files"
 echo "PASS: Void Zsh is idempotent, backup-gated and rollback-safe"
-echo "PASS: ani-cli and Void Zsh resolve through the optional selector"
+echo "PASS: terminal extras resolve through the optional selector"
 echo "PASS: fullscreen and maximize states use separate valid wmctrl requests"
