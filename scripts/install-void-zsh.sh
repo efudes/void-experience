@@ -8,15 +8,17 @@ begin_marker='# >>> Void Experience Zsh >>>'
 end_marker='# <<< Void Experience Zsh <<<'
 dry_run=false
 make_default=false
+codex_bypass=false
 backup_id=
 
 for argument in "$@"; do
     case "$argument" in
         --dry-run) dry_run=true ;;
         --make-default) make_default=true ;;
+        --codex-bypass) codex_bypass=true ;;
         --backup-id=*) backup_id=${argument#--backup-id=} ;;
         -h|--help)
-            echo "Usage: scripts/install-void-zsh.sh --backup-id=ID [--dry-run] [--make-default]"
+            echo "Usage: scripts/install-void-zsh.sh --backup-id=ID [--dry-run] [--make-default] [--codex-bypass]"
             exit 0
             ;;
         *) echo "Unknown argument: $argument" >&2; exit 2 ;;
@@ -27,6 +29,8 @@ if "$dry_run"; then
     echo "Would install the Void Zsh profile in: $profile_dir"
     echo "Would append one managed source block to: $HOME/.zshrc"
     "$make_default" && echo "Would request Zsh as the login shell."
+    "$codex_bypass" &&
+        echo "Would enable the high-risk crb Codex sandbox-bypass alias."
     exit 0
 fi
 
@@ -52,6 +56,12 @@ install -m 0644 "$project_dir/configs/zsh/void-experience.zsh" \
     "$profile_dir/void-experience.zsh"
 install -m 0644 "$project_dir/configs/zsh/starship.toml" \
     "$profile_dir/starship.toml"
+if "$codex_bypass"; then
+    install -m 0644 "$project_dir/configs/zsh/codex-bypass.zsh" \
+        "$profile_dir/codex-bypass.zsh"
+else
+    rm -f -- "$profile_dir/codex-bypass.zsh"
+fi
 
 font_source="$project_dir/assets/fonts/JetBrainsMonoNerdFont-Regular.ttf"
 font_target="$HOME/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf"

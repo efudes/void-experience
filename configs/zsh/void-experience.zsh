@@ -53,6 +53,9 @@ fi
 (( $+commands[fastfetch] )) && alias ff='fastfetch'
 (( $+commands[btop] )) && alias bt='btop'
 
+[[ -r "$HOME/.config/void-experience/zsh/codex-bypass.zsh" ]] &&
+  source "$HOME/.config/void-experience/zsh/codex-bypass.zsh"
+
 if [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi

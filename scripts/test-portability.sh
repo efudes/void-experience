@@ -214,11 +214,11 @@ PATH="$mock_dir:$PATH" \
 HOME="$rollback_home" \
 PATH="$mock_dir:$PATH" \
     "$project_dir/scripts/install-void-zsh.sh" \
-    --backup-id=20000101-000000 >/dev/null
+    --backup-id=20000101-000000 --codex-bypass >/dev/null
 HOME="$rollback_home" \
 PATH="$mock_dir:$PATH" \
     "$project_dir/scripts/install-void-zsh.sh" \
-    --backup-id=20000101-000000 >/dev/null
+    --backup-id=20000101-000000 --codex-bypass >/dev/null
 [ "$(grep -Fxc '# >>> Void Experience Zsh >>>' "$rollback_home/.zshrc")" -eq 1 ]
 grep -Fqx 'include void-zsh-font.conf' \
     "$rollback_home/.config/kitty/kitty.conf"
@@ -226,7 +226,7 @@ HOME="$rollback_home" \
 ZDOTDIR="$rollback_home" \
 XDG_CONFIG_HOME=/deliberately/wrong \
 XDG_CACHE_HOME=/deliberately/wrong \
-    zsh -ic 'alias ll >/dev/null; [[ "$STARSHIP_CONFIG" == "$HOME/.config/void-experience/zsh/starship.toml" ]]'
+    zsh -ic 'alias ll >/dev/null; alias crb | grep -q dangerously-bypass-approvals-and-sandbox; [[ "$STARSHIP_CONFIG" == "$HOME/.config/void-experience/zsh/starship.toml" ]]'
 
 printf 'mutated-xfce\n' >"$rollback_home/.config/xfce4/value"
 printf 'mutated-layout\n' >"$rollback_home/.local/bin/void-layout"
@@ -252,9 +252,9 @@ grep -Fq 'panel-load ' "$test_log"
 selection_file="$test_root/selection"
 VOID_EXPERIENCE_SELECTION_FILE="$selection_file" \
     "$project_dir/scripts/install-packages.sh" \
-    --extras=ani-cli,void-zsh,cava,ncdu,duf,du-dust,lazygit,broot,glow \
+    --extras=ani-cli,void-zsh,codex-bypass,cava,ncdu,duf,du-dust,lazygit,broot,glow \
     --dry-run >"$test_root/packages.out"
-grep -qx 'ani-cli,void-zsh,cava,ncdu,duf,du-dust,lazygit,broot,glow' \
+grep -qx 'ani-cli,void-zsh,codex-bypass,cava,ncdu,duf,du-dust,lazygit,broot,glow' \
     "$selection_file"
 grep -q ' ani-cli ' "$test_root/packages.out"
 grep -q ' zsh starship zoxide ' "$test_root/packages.out"

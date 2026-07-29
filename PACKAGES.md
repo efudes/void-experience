@@ -40,6 +40,10 @@ and adds one marked source block after the timestamped backup exists. Login
 shell replacement is confirmed separately and rollback restores the recorded
 baseline shell.
 
+`codex-bypass` is an optional companion to `void-zsh`. It installs the `crb`
+resume alias only after a separate `ENABLE CODEX BYPASS` confirmation and is
+never enabled by the default package selection.
+
 No third-party APT repository is added and no downloaded shell script is
 executed. Rollback retains packages to avoid removing dependencies used by
 other desktop sessions.

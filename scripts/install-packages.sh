@@ -12,7 +12,7 @@ usage() {
 Usage: scripts/install-packages.sh [--select] [--extras=LIST] [--dry-run]
 
 The Debian core is always installed. LIST is a comma-separated selection of:
-flatpak,steam,lutris,discord,portproton,ani-cli,void-zsh,cava,ncdu,duf,
+flatpak,steam,lutris,discord,portproton,ani-cli,void-zsh,codex-bypass,cava,ncdu,duf,
 du-dust,lazygit,broot,glow,none
 
 Without --extras the script opens a terminal checklist. Gaming and communication
@@ -40,7 +40,7 @@ validate_selection() {
     for item in $selected; do
         case "$item" in
             flatpak|steam|lutris|discord|portproton|ani-cli|void-zsh|\
-            cava|ncdu|duf|du-dust|lazygit|broot|glow|none|'') ;;
+            codex-bypass|cava|ncdu|duf|du-dust|lazygit|broot|glow|none|'') ;;
             *) echo "Unknown optional component: $item" >&2; exit 2 ;;
         esac
     done
@@ -62,6 +62,7 @@ if "$interactive"; then
                 portproton "PortProton (Flathub, x86_64)" OFF \
                 ani-cli "ani-cli (terminal anime browser/player)" OFF \
                 void-zsh "Void Zsh (portable terminal profile)" OFF \
+                codex-bypass "crb: Codex resume without sandbox (DANGEROUS)" OFF \
                 cava "CAVA (terminal audio visualizer)" OFF \
                 ncdu "ncdu (interactive disk usage)" OFF \
                 duf "duf (filesystem overview)" OFF \
@@ -98,6 +99,11 @@ has_selection() {
     esac
 }
 
+if has_selection codex-bypass && ! has_selection void-zsh; then
+    echo "codex-bypass requires the void-zsh component." >&2
+    exit 2
+fi
+
 for mapping in \
     'steam:com.valvesoftware.Steam' \
     'lutris:net.lutris.Lutris' \
@@ -120,7 +126,6 @@ done
 if has_selection void-zsh; then
     apt_packages="$apt_packages zsh starship zoxide eza bat ripgrep fd-find fastfetch btop fzf zsh-autosuggestions zsh-syntax-highlighting fonts-jetbrains-mono"
 fi
-
 architecture=$(dpkg --print-architecture)
 if [ "$architecture" != amd64 ] &&
     { has_selection steam || has_selection portproton; }; then
@@ -160,6 +165,17 @@ if has_selection void-zsh; then
     read -r zsh_answer
     [ "$zsh_answer" = "INSTALL VOID ZSH" ] || {
         echo "Void Zsh confirmation failed; package installation cancelled." >&2
+        exit 1
+    }
+fi
+if has_selection codex-bypass; then
+    echo
+    echo "WARNING: crb disables Codex approval prompts and sandbox isolation."
+    echo "A resumed session can execute commands with your user permissions."
+    printf "Type ENABLE CODEX BYPASS to add this alias: "
+    read -r bypass_answer
+    [ "$bypass_answer" = "ENABLE CODEX BYPASS" ] || {
+        echo "Codex bypass confirmation failed; package installation cancelled." >&2
         exit 1
     }
 fi

@@ -24,6 +24,8 @@
   `Alt+F4`.
 - Removed the cyan checked-state background from the actual ID-addressed
   systray overflow arrow without changing active task buttons.
+- Added the disabled-by-default `codex-bypass` Void Zsh option. It installs the
+  `crb` resume alias only after a separate explicit risk confirmation.
 
 ## 0.1.0 — 2026-07-28
 

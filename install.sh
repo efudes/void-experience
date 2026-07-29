@@ -78,13 +78,19 @@ fi
 
 case ",$(cat "$selection_file" 2>/dev/null || true)," in
     *,void-zsh,*)
-        "$project_dir/scripts/install-void-zsh.sh" --backup-id="$backup_id"
+        zsh_arguments=
+        case ",$(cat "$selection_file" 2>/dev/null || true)," in
+            *,codex-bypass,*) zsh_arguments=--codex-bypass ;;
+        esac
+        "$project_dir/scripts/install-void-zsh.sh" \
+            --backup-id="$backup_id" ${zsh_arguments:+"$zsh_arguments"}
         printf "Make Zsh the default login shell too? [y/N] "
         read -r shell_answer
         case "$shell_answer" in
             y|Y|yes|YES)
                 "$project_dir/scripts/install-void-zsh.sh" \
-                    --backup-id="$backup_id" --make-default
+                    --backup-id="$backup_id" --make-default \
+                    ${zsh_arguments:+"$zsh_arguments"}
                 ;;
             *) echo "Login shell was not changed." ;;
         esac

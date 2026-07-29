@@ -32,6 +32,11 @@ highlighting and the bundled JetBrainsMono Nerd Font. It requires a second,
 literal confirmation before any shell file is changed. Changing the login
 shell is a third, separate opt-in.
 
+The separate `codex-bypass` choice adds the `crb` alias for
+`codex resume --last --dangerously-bypass-approvals-and-sandbox`. It requires
+`void-zsh`, is disabled by default and demands one more literal confirmation
+because the command removes Codex approval prompts and sandbox isolation.
+
 That is the only installation script. It:
 
 1. shows a package checklist and the exact commands before privilege elevation;
