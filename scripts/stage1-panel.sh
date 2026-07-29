@@ -186,6 +186,16 @@ done
 write_int_array /panels $panel_ids
 set_value /panels/dark-mode bool true
 
+# The overflow arrow is an XfceArrowButton under a widget named systray-ID.
+# Render the actual plugin ID instead of relying on a nonexistent CSS class.
+theme_gtk_dir="$HOME/.themes/Void-Experience/gtk-3.0"
+systray_template="$theme_gtk_dir/systray.css.in"
+if [ -n "${tray-}" ] && [ -f "$systray_template" ]; then
+    sed "s/@TRAY_ID@/$tray/g" \
+        "$systray_template" \
+        >"$theme_gtk_dir/systray.css"
+fi
+
 xfconf-query -c xfwm4 -p /general/workspace_count -s 4
 xfconf-query -c xfwm4 -p /general/workspace_names -a \
     -t string -s 1 -t string -s 2 -t string -s 3 -t string -s 4

@@ -22,6 +22,8 @@
   packages to the optional Debian software checklist.
 - Added native xfwm4 close-window handling on `Super+W` while preserving
   `Alt+F4`.
+- Removed the cyan checked-state background from the actual ID-addressed
+  systray overflow arrow without changing active task buttons.
 
 ## 0.1.0 — 2026-07-28
 

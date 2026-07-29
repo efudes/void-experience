@@ -28,6 +28,11 @@ install -m 0644 "$theme_source/gtk-3.0/gtk.css" \
     "$theme_target/gtk-3.0/gtk.css"
 install -m 0644 "$theme_source/gtk-3.0/gtk-dark.css" \
     "$theme_target/gtk-3.0/gtk-dark.css"
+install -m 0644 "$project_dir/configs/xfce4/systray.css.in" \
+    "$theme_target/gtk-3.0/systray.css.in"
+# Stage 1 renders systray.css with the actual plugin ID.
+[ -f "$theme_target/gtk-3.0/systray.css" ] ||
+    : >"$theme_target/gtk-3.0/systray.css"
 ln -sfn /usr/share/themes/Arc-Dark/gtk-3.0/gtk.gresource \
     "$theme_target/gtk-3.0/gtk.gresource"
 

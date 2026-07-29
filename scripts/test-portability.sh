@@ -117,6 +117,11 @@ if grep -Fq '$HOME' "$apply_home/.config/autostart/void-experience-picom.desktop
     echo "FAIL: generated autostart contains an unexpanded HOME" >&2
     exit 1
 fi
+grep -Fq '#systray-810 button.toggle:checked' \
+    "$apply_home/.themes/Void-Experience/gtk-3.0/systray.css" || {
+    echo "FAIL: systray CSS was not rendered for the generated plugin ID" >&2
+    exit 1
+}
 cmp -s "$test_root/apply-1.digest" "$test_root/apply-2.digest" || {
     echo "FAIL: second apply changed the generated file tree" >&2
     diff -u "$test_root/apply-1.digest" "$test_root/apply-2.digest" || true

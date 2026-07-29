@@ -1,4 +1,5 @@
 @import url("resource:///org/gnome/arc-theme/gtk-main-dark.css");
+@import url("systray.css");
 
 /*
  * Void Experience panel layer.
