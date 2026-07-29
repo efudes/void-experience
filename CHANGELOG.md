@@ -20,6 +20,8 @@
   fullscreen and maximize removals as valid separate EWMH requests.
 - Added individually selectable CAVA, ncdu, duf, dust, lazygit, broot and Glow
   packages to the optional Debian software checklist.
+- Added native xfwm4 close-window handling on `Super+W` while preserving
+  `Alt+F4`.
 
 ## 0.1.0 — 2026-07-28
 

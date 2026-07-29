@@ -73,6 +73,7 @@ set_shortcut '/commands/custom/<Super>l' 'xfce4-screensaver-command --lock'
 set_shortcut '/commands/custom/Print' 'flameshot gui'
 set_shortcut '/commands/custom/<Shift>Print' 'xfce4-screenshooter'
 set_shortcut '/commands/custom/<Super>v' 'xfce4-clipman-history'
+set_shortcut '/xfwm4/custom/<Super>w' close_window_key
 install -Dm0755 "$project_dir/scripts/void-toggle-desktop" \
     "$HOME/.local/bin/void-toggle-desktop"
 xfconf-query -c xfce4-keyboard-shortcuts \

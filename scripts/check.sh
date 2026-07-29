@@ -63,6 +63,14 @@ else
     warn "Super+V clipboard history is not configured"
 fi
 
+if xfconf-query -c xfce4-keyboard-shortcuts \
+    -p '/xfwm4/custom/<Super>w' 2>/dev/null |
+    grep -qx 'close_window_key'; then
+    pass "Super+W closes the active window"
+else
+    warn "Super+W close-window shortcut is not configured"
+fi
+
 if [ -x "$HOME/.local/bin/xfwm4" ] &&
     [ -r "$HOME/.local/lib/void-experience/libxfwm-null-hash-guard.so" ]; then
     pass "xfwm4 external-compositor NULL guard is installed"

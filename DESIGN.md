@@ -28,6 +28,7 @@ Large cyan surfaces and strong gradients are avoided.
 - `Super+E`: Thunar
 - `Super+L`: lock screen
 - `Super+D`: toggle the desktop and restore windows
+- `Super+W`: close the active window
 - `Super+1..4`: select workspace
 - `Super+Shift+1..4`: move active window
 - `Super+Ctrl+Left/Right`: adjacent workspace

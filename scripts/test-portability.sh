@@ -264,6 +264,8 @@ fi
 grep -q -- '-b remove,fullscreen' "$project_dir/scripts/void-layout.sh"
 grep -q -- '-b remove,maximized_vert,maximized_horz' \
     "$project_dir/scripts/void-layout.sh"
+grep -Fq "set_shortcut '/xfwm4/custom/<Super>w' close_window_key" \
+    "$project_dir/scripts/stage2-windows.sh"
 
 echo "PASS: apply file tree is idempotent"
 echo "PASS: primary monitor is configured first"
@@ -274,3 +276,4 @@ echo "PASS: rollback restores baseline and displaces post-install files"
 echo "PASS: Void Zsh is idempotent, backup-gated and rollback-safe"
 echo "PASS: terminal extras resolve through the optional selector"
 echo "PASS: fullscreen and maximize states use separate valid wmctrl requests"
+echo "PASS: Super+W uses native xfwm4 close-window handling"

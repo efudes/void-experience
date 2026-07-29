@@ -73,6 +73,7 @@ freedesktop MIME associations are user-wide.
 - window-layout popup on `Super+Z`, direct layouts and 8 px gaps;
 - Kitty on `Super+T`, Thunar on `Super+E`, lock on `Super+L`;
 - show/restore desktop on `Super+D`;
+- native active-window close on `Super+W`;
 - Flameshot on `Print` and XFCE Screenshooter on `Shift+Print`;
 - lightweight Clipman clipboard history on `Super+V`;
 - Celluloid and Thunar Space preview through Sushi;
