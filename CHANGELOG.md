@@ -12,6 +12,8 @@
 - Added Picom XRender fallback and xfwm compositor recovery for unsupported GPUs.
 - Added temporary-HOME regression tests for one/two monitors, repeated apply and rollback.
 - Replaced non-portable `$HOME` Desktop Entry commands with install-time templates.
+- Added matching per-shortcut Downloads and Documents icons without changing
+  the user's whitespace-only desktop labels.
 
 ## 0.1.0 — 2026-07-28
 

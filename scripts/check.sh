@@ -97,6 +97,14 @@ else
     warn "label-free XFCE desktop launchers are incomplete"
 fi
 
+for icon_name in void-downloads void-documents; do
+    if [ -f "$HOME/.local/share/icons/Void-Experience-Icons/48x48/places/$icon_name.svg" ]; then
+        pass "$icon_name desktop icon is installed"
+    else
+        warn "$icon_name desktop icon is missing"
+    fi
+done
+
 picom_count=$(pgrep -x picom 2>/dev/null | wc -l)
 if [ "$picom_count" -le 1 ]; then
     pass "no duplicate Picom process detected"

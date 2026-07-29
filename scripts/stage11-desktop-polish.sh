@@ -38,5 +38,31 @@ for launcher in void-home void-filesystem void-trash; do
         "$desktop_dir/Void-${launcher#void-}.desktop"
 done
 
+# Keep user-chosen labels (including whitespace-only labels) and decorate
+# existing Downloads/Documents symlinks instead of replacing them.
+downloads_dir=$(xdg-user-dir DOWNLOAD 2>/dev/null || true)
+documents_dir=$(xdg-user-dir DOCUMENTS 2>/dev/null || true)
+[ -n "$downloads_dir" ] || downloads_dir="$HOME/Downloads"
+[ -n "$documents_dir" ] || documents_dir="$HOME/Documents"
+
+find "$desktop_dir" -mindepth 1 -maxdepth 1 -type l -print |
+while IFS= read -r shortcut; do
+    target=$(readlink -f -- "$shortcut" 2>/dev/null || true)
+    case "$target" in
+        "$downloads_dir")
+            icon_file="$icon_target/48x48/places/void-downloads.svg"
+            ;;
+        "$documents_dir")
+            icon_file="$icon_target/48x48/places/void-documents.svg"
+            ;;
+        *)
+            continue
+            ;;
+    esac
+    gio set -t string "$shortcut" metadata::custom-icon \
+        "$(gio info -a standard::target-uri "$icon_file" |
+            sed -n 's/^uri: //p')" 2>/dev/null || true
+done
+
 xfdesktop --reload >/dev/null 2>&1 || true
 echo "Stage 11 desktop icon polish applied."
